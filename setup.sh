@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Pastikan dijalankan sebagai root
-if [ "$EUID" -ne 0 ]; then 
+if [ "$EUID" -ne 0 ]; then
   echo "Silakan jalankan sebagai root (gunakan sudo)"
   exit
 fi
@@ -31,3 +31,4 @@ usermod -a -G www-data root
 
 echo "--- Setup Selesai! ---"
 echo "Langkah selanjutnya: Konfigurasi Database MySQL."
+
