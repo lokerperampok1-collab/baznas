@@ -58,7 +58,7 @@
                     <div class="donation_progress">
                         <div class="donation_progress_bar full_green" style="background:#f5d72c;width:{{ $progress_percent }}%"></div>
                         <span class="d_target_graph"><b>{{ $donation_count }}</b> Donasi</span>
-                        <span class="d_date"><span>{{ \Carbon\Carbon::parse('2026-06-16')->diffForHumans(null, true) }}&nbsp;lagi</span></span>
+                        <span class="d_date"><span>{{ \Carbon\Carbon::parse('2026-05-30')->diffInDays(now()) }}&nbsp;hari lagi</span></span>
                     </div>
                 </div>
 
