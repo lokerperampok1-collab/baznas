@@ -8,6 +8,7 @@
 	<meta name="title" content="KURBAN BERKAH BAZNAS">
 	<meta name="description" content="Kurban tidak harus mahal. Dengan Program Kurban Berkah BAZNAS, Anda bisa menunaikan ibadah qurban dengan harga terjangkau, tanpa mengurangi esensi dan keberkahan. Bayangkan kebahagiaan yang Anda sebarkan dengan qurban yang hemat, menjangkau lebih banyak saudara kita.">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 	
     <meta property="og:type" content="website" />
 	<meta property="og:title" content="KURBAN BERKAH BAZNAS" />
