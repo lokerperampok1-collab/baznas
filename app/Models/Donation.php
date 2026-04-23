@@ -8,6 +8,7 @@ class Donation extends Model
 {
     protected $fillable = [
         'token',
+        'pakasir_order_id',
         'sapaan',
         'name',
         'whatsapp',
@@ -18,9 +19,11 @@ class Donation extends Model
         'total_payment',
         'payment_method',
         'payment_status',
+        'payment_data',
     ];
 
     protected $casts = [
         'qurban_details' => 'array',
+        'payment_data' => 'array',
     ];
 }

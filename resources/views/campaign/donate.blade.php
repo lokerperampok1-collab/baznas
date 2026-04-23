@@ -150,6 +150,18 @@
     <h2 class="card-title" style="background: #0099FF;color: #fff;padding: 50px 0px;margin-top: -30px;">Metode Pembayaran</h2>
     <div class="card_payment">
         <label class="card-label title-list payment_transfer" style="margin-top: -45px;">
+            <span class="card-title2">QRIS & E-Wallet (Otomatis)</span>
+        </label>
+        <label class="card-label qris payment_transfer set_qris" data-method="qris" data-code="qris" data-number="" data-account="" data-paymentname="QRIS (Otomatis)">
+            <input class="card-radio" type="radio" name="card" value="qris" data-method="qris" data-code="qris" data-number="" data-account="" data-paymentname="QRIS (Otomatis)">
+            <span class="card-icon"><img src="{{ asset('assets/images/bank/bank.png') }}" alt=""></span>
+            <span class="card-text">QRIS & E-Wallet</span>
+            <span class="card-check">
+                <svg fill="#259148" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </span>
+        </label>
+
+        <label class="card-label title-list payment_transfer" style="margin-top: 10px;">
             <span class="card-title2">Transfer Bank (Verifikasi Manual 1x24jam)</span>
         </label>
         @php
@@ -203,7 +215,7 @@
 
 @section('scripts')
 <script src="{{ asset('assets/js/js.cookie.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.tag-editor.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.tag-editor.min.js') }}"></script> --}}
 <script>
     $(document).ready(function() {
         // Initial state

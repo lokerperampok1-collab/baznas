@@ -6,8 +6,17 @@ use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Services\PakasirService;
+
 class CampaignController extends Controller
 {
+    protected $pakasir;
+
+    public function __construct(PakasirService $pakasir)
+    {
+        $this->pakasir = $pakasir;
+    }
+
     public function show()
     {
         $target = 1000000000;
@@ -35,14 +44,16 @@ class CampaignController extends Controller
 
         $total_nominal = 0;
         foreach ($request->qurban_details as $item) {
-            $total_nominal += $item['price'] * $item['count'];
+            $price = $item['price'] ?? 0;
+            $count = $item['count'] ?? 0;
+            $total_nominal += $price * $count;
         }
 
         $unique_code = rand(100, 999);
         $total_payment = $total_nominal + $unique_code;
         $token = Str::random(16);
 
-        $donation = Donation::create([
+        $donationData = [
             'token' => $token,
             'sapaan' => $request->sapaan,
             'name' => $request->name,
@@ -54,7 +65,20 @@ class CampaignController extends Controller
             'total_payment' => $total_payment,
             'payment_method' => $request->payment_method,
             'payment_status' => 'pending',
-        ]);
+        ];
+
+        // Pakasir Integration
+        if ($request->payment_method == 'qris') {
+            $pakasirResponse = $this->pakasir->createPayment('qris', $token, $total_payment);
+            \Log::info('Pakasir Response: ' . json_encode($pakasirResponse));
+            
+            if (isset($pakasirResponse['payment'])) {
+                $donationData['pakasir_order_id'] = $pakasirResponse['payment']['order_id'] ?? null;
+                $donationData['payment_data'] = $pakasirResponse['payment'] ?? null;
+            }
+        }
+
+        $donation = Donation::create($donationData);
 
         return response()->json([
             'success' => true,

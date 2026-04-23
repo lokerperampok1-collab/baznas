@@ -103,6 +103,28 @@
         </p>
     </div>
 
+    @if($donation->payment_method == 'qris')
+        <div class="bank-details" style="text-align: center;">
+            <p style="font-size: 14px; font-weight: bold; margin-bottom: 15px;">Scan QRIS di bawah ini:</p>
+            @php
+                $qr_url = $donation->payment_data['qr_image_url'] ?? 
+                          $donation->payment_data['qr_url'] ?? 
+                          (isset($donation->payment_data['payment_number']) ? 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . $donation->payment_data['payment_number'] : null);
+            @endphp
+
+            @if($qr_url)
+                <img src="{{ $qr_url }}" alt="QRIS Code" style="height: auto; width: 100%; max-width: 300px; margin-bottom: 15px; border: 1px solid #eee; padding: 10px; border-radius: 8px;">
+            @else
+                <p class="text-danger">Gagal memuat kode QRIS.</p>
+            @endif
+            <p style="font-size: 12px; color: #757575;">Berlaku untuk semua aplikasi E-Wallet & Mobile Banking</p>
+        </div>
+    @elseif($donation->payment_method == 'qris' && isset($donation->payment_data['payment_url']))
+    <div class="bank-details" style="text-align: center;">
+        <p style="margin-bottom: 15px;">Klik tombol di bawah untuk membayar melalui QRIS/E-Wallet:</p>
+        <a href="{{ $donation->payment_data['payment_url'] }}" target="_blank" class="wa-button" style="background: #0099ff; margin-top: 0;">BAYAR SEKARANG</a>
+    </div>
+    @else
     <div class="bank-details">
         @if($bank)
             <img src="{{ asset('assets/images/bank/'.$donation->payment_method.'.png') }}" alt="{{ $bank['name'] }}">
@@ -119,13 +141,21 @@
             <p>Metode pembayaran tidak ditemukan.</p>
         @endif
     </div>
+    @endif
 
     <div style="margin-top: 30px;">
         <h4 style="margin-bottom: 15px;">Cara Pembayaran:</h4>
         <ul class="instruction-list">
-            <li>Gunakan Mobile Banking/ATM untuk transfer.</li>
-            <li>Pastikan nominal transfer **persis** sampai 3 digit terakhir.</li>
-            <li>Simpan bukti transfer Anda.</li>
+            @if($donation->payment_method == 'qris')
+                <li>Buka aplikasi OVO, GoPay, Dana, LinkAja, atau Mobile Banking Anda.</li>
+                <li>Pilih fitur "Scan QR" atau "Bayar".</li>
+                <li>Scan kode QR yang tampil di atas atau klik tombol bayar.</li>
+                <li>Konfirmasi pembayaran di aplikasi Anda.</li>
+            @else
+                <li>Gunakan Mobile Banking/ATM untuk transfer.</li>
+                <li>Pastikan nominal transfer **persis** sampai 3 digit terakhir.</li>
+                <li>Simpan bukti transfer Anda.</li>
+            @endif
             <li>Klik tombol di bawah untuk konfirmasi ke WhatsApp Admin.</li>
         </ul>
     </div>
@@ -133,7 +163,9 @@
     @php
         $items = "";
         foreach($donation->qurban_details as $item) {
-            $items .= $item['name'] . " (" . $item['count'] . "x), ";
+            $name = $item['name'] ?? 'Paket Kurban';
+            $count = $item['count'] ?? 0;
+            $items .= $name . " (" . $count . "x), ";
         }
         $items = rtrim($items, ", ");
         
