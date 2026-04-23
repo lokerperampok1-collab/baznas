@@ -161,30 +161,7 @@
             </span>
         </label>
 
-        <label class="card-label title-list payment_transfer" style="margin-top: 10px;">
-            <span class="card-title2">Transfer Bank (Verifikasi Manual 1x24jam)</span>
-        </label>
-        @php
-            $banks = [
-                ['code' => 'bsi', 'name' => 'Transfer Bank Syariah Indonesia', 'number' => '7110821888', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-                ['code' => 'bank_bjb_syariah', 'name' => 'Transfer Bank BJB Syariah', 'number' => '5160102000700', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-                ['code' => 'bank_bjb', 'name' => 'Transfer Bank BJB', 'number' => '0050030012410', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-                ['code' => 'bri', 'name' => 'Transfer Bank BRI', 'number' => '016101000295300', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-                ['code' => 'bni', 'name' => 'Transfer Bank BNI', 'number' => '589387361', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-                ['code' => 'mandiri', 'name' => 'Transfer Bank Mandiri', 'number' => '1770001242988 ', 'acc' => 'BAZNAS Kabupaten Tasikmalaya'],
-            ];
-        @endphp
 
-        @foreach($banks as $b)
-        <label class="card-label {{ $b['code'] }} payment_transfer set_manual" data-method="transfer" data-code="{{ $b['code'] }}" data-number="{{ $b['number'] }}" data-account="{{ $b['acc'] }}" data-paymentname="{{ $b['name'] }}">
-            <input class="card-radio" type="radio" name="card" value="{{ $b['code'] }}" data-method="transfer" data-code="{{ $b['code'] }}" data-number="{{ $b['number'] }}" data-account="{{ $b['acc'] }}" data-paymentname="{{ $b['name'] }}">
-            <span class="card-icon"><img src="{{ asset('assets/images/bank/'.$b['code'].'.png') }}" alt=""></span>
-            <span class="card-text">{{ $b['name'] }}</span>
-            <span class="card-check">
-                <svg fill="#259148" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            </span>
-        </label>
-        @endforeach
     </div>
 </div>
 
