@@ -20,10 +20,10 @@ class CampaignController extends Controller
     public function show()
     {
         $target = 1000000000;
-        $total_donated = Donation::sum('total_nominal');
-        $donation_count = Donation::count();
+        $total_donated = Donation::where('payment_status', 'success')->sum('total_nominal');
+        $donation_count = Donation::where('payment_status', 'success')->count();
         $progress_percent = ($target > 0) ? ($total_donated / $target) * 100 : 0;
-        $donations = Donation::latest()->take(10)->get();
+        $donations = Donation::where('payment_status', 'success')->latest()->take(10)->get();
 
         return view('campaign.show', compact('total_donated', 'donation_count', 'target', 'progress_percent', 'donations'));
     }
@@ -110,7 +110,7 @@ class CampaignController extends Controller
         $offset = $request->input('offset', 0);
         $type = $request->input('type', 'terbaru'); // terbaru, terbesar, doa
 
-        $query = Donation::query();
+        $query = Donation::where('payment_status', 'success');
 
         if ($type == 'terbaru') {
             $query->latest();
