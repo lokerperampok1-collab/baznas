@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donation;
+use App\Models\QurbanPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,8 @@ class CampaignController extends Controller
 
     public function donate()
     {
-        return view('campaign.donate');
+        $qurbans = QurbanPackage::where('is_active', true)->get();
+        return view('campaign.donate', compact('qurbans'));
     }
 
     public function donateSubmit(Request $request)

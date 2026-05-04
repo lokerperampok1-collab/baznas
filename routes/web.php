@@ -15,3 +15,13 @@ Route::get('/campaign/kurban/invoice/{token}', [CampaignController::class, 'invo
 Route::post('/campaign/kurban/load-more', [CampaignController::class, 'loadMoreDonations'])->name('campaign.load-more');
 
 Route::post('/pakasir/callback', [PakasirCallbackController::class, 'handle'])->name('pakasir.callback');
+
+// Admin /purno Routes
+use App\Http\Controllers\Admin\AdminCampaignController;
+Route::prefix('purno')->group(function () {
+    Route::get('/', [AdminCampaignController::class, 'index'])->name('admin.purno.index');
+    Route::post('/store', [AdminCampaignController::class, 'store'])->name('admin.purno.store');
+    Route::post('/update/{id}', [AdminCampaignController::class, 'update'])->name('admin.purno.update');
+    Route::delete('/delete/{id}', [AdminCampaignController::class, 'destroy'])->name('admin.purno.delete');
+    Route::patch('/toggle/{id}', [AdminCampaignController::class, 'toggleStatus'])->name('admin.purno.toggle');
+});

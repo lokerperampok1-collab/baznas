@@ -51,40 +51,30 @@
     <div class="form-group" id="form-group">
         <div class="donasiaja-input" style="margin-top: 10px;">
             <div class="card-body card-group" style="margin-bottom:30px;margin-left:-5px;min-height:125px;">
-                @php
-                    $qurbans = [
-                        ['id' => 'xaci1', 'name' => 'DOMBA GRADE C 🔥(Stok Terbatas)', 'price' => 1699000, 'desc' => 'Perkiraan Berat 20 - 23 Kg', 'folder' => '2026/03', 'img' => 'gradec-500x350.png', 'type' => 'Domba'],
-                        ['id' => '6p5gl', 'name' => 'DOMBA GRADE B', 'price' => 2750000, 'desc' => 'Perkiraan Berat 28 - 32 Kg', 'folder' => '2026/03', 'img' => 'grade-B-500x350.png', 'type' => 'Domba'],
-                        ['id' => 'ozpee', 'name' => 'DOMBA GRADE A', 'price' => 3300000, 'desc' => 'Perkiraan Berat 35 - 38', 'folder' => '2026/03', 'img' => 'Grade-A-500x350.png', 'type' => 'Kambing'],
-                        ['id' => 'v6gmd', 'name' => 'Sapi 1/7 Ekor', 'price' => 3500000, 'desc' => 'Perkiraan Berat 220 - 270 Kg', 'folder' => '2025/04', 'img' => 'paybill-program-banner-1-NOALGD-1715674694244.jpg', 'type' => 'Sapi'],
-                        ['id' => 'ugad1', 'name' => 'Sapi 1 Ekor Full', 'price' => 24500000, 'desc' => 'Perkiraan Berat 220 - 270 Kg', 'folder' => '2025/04', 'img' => 'SAPI.jpg', 'type' => 'Sapi'],
-                    ];
-                @endphp
-
                 @foreach($qurbans as $q)
-                <label class="card-radio-btn card-form card-qurban" id="label_{{ $q['id'] }}">
-                    <input type="checkbox" name="nominal_donasi" class="card-input-element" value="{{ $q['name'] }}" data-label="{{ $q['price'] }}" style="display:none;">
+                <label class="card-radio-btn card-form card-qurban" id="label_{{ $q->id }}">
+                    <input type="checkbox" name="nominal_donasi" class="card-input-element" value="{{ $q->name }}" data-label="{{ $q->price }}" style="display:none;">
                     <div class="card card-body">
-                        <div class="card-img" data-type="{{ $q['type'] }}" data-payment="1">
-                            <img class="img-qurban" src="{{ asset('uploads/'.$q['folder'].'/'.$q['img']) }}">
+                        <div class="card-img" data-type="{{ $q->type }}" data-payment="1">
+                            <img class="img-qurban" src="{{ $q->image_url }}">
                         </div>
-                        <div class="content_head no_desc qurban_name"><span>{{ $q['name'] }}</span></div>
-                        <div class="content_sub"><span>{{ $q['desc'] }}</span></div>
-                        <div class="content_head no_desc qurban_pricing data_pricing" data-pricing="{{ $q['price'] }}">
-                            <img src="{{ asset('assets/images/qurban/'.$q['type'].'.png') }}" class="{{ $q['type'] }}"><span>Rp {{ number_format($q['price'], 0, ',', '.') }}</span>
+                        <div class="content_head no_desc qurban_name"><span>{{ $q->name }}</span></div>
+                        <div class="content_sub"><span>{{ $q->description }}</span></div>
+                        <div class="content_head no_desc qurban_pricing data_pricing" data-pricing="{{ $q->price }}">
+                            <img src="{{ asset('assets/images/qurban/'.$q->type.'.png') }}" class="{{ $q->type }}"><span>{{ $q->formatted_price }}</span>
                         </div>
                         <div class="content_head no_desc" style="float: right;">
-                            <div id="btn_add_{{ $q['id'] }}" class="counter-number btn_add" data-id="{{ $q['id'] }}" data-pricing="{{ $q['name'] }}" data-type="{{ $q['type'] }}" data-payment="1" data-placeholder="Kurban atas nama">
+                            <div id="btn_add_{{ $q->id }}" class="counter-number btn_add" data-id="{{ $q->id }}" data-pricing="{{ $q->name }}" data-type="{{ $q->type }}" data-payment="1" data-placeholder="Kurban atas nama">
                                 <span class="add ripple">+ Add</span>
                             </div>
-                            <div id="btn_plusminus_{{ $q['id'] }}" class="counter-number btn_plusminus" data-id="{{ $q['id'] }}" style="display:none;">
-                                <span class="minus ripple" data-id="{{ $q['id'] }}" data-pricing="{{ $q['price'] }}" data-type="{{ $q['type'] }}" data-payment="1" data-placeholder="Kurban atas nama">-</span>
-                                <input type="text" value="0" class="count" data-id="{{ $q['id'] }}" data-placeholder="Kurban atas nama"/>
-                                <span class="plus ripple" data-id="{{ $q['id'] }}" data-pricing="{{ $q['price'] }}" data-type="{{ $q['type'] }}" data-payment="1" data-placeholder="Kurban atas nama">+</span>
+                            <div id="btn_plusminus_{{ $q->id }}" class="counter-number btn_plusminus" data-id="{{ $q->id }}" style="display:none;">
+                                <span class="minus ripple" data-id="{{ $q->id }}" data-pricing="{{ $q->price }}" data-type="{{ $q->type }}" data-payment="1" data-placeholder="Kurban atas nama">-</span>
+                                <input type="text" value="0" class="count" data-id="{{ $q->id }}" data-placeholder="Kurban atas nama"/>
+                                <span class="plus ripple" data-id="{{ $q->id }}" data-pricing="{{ $q->price }}" data-type="{{ $q->type }}" data-payment="1" data-placeholder="Kurban atas nama">+</span>
                             </div>
                         </div>
-                        <div id="atasnama_{{ $q['id'] }}" class="content_atasnama" style="display:none;" data-id="{{ $q['id'] }}" title="Kurban atas nama">
-                            <input id="tag_atasnama_{{ $q['id'] }}" placeholder="Kurban atas nama" type="text" class="form-control tagit" name="whatsapp" value="" style="height: 42px;">
+                        <div id="atasnama_{{ $q->id }}" class="content_atasnama" style="display:none;" data-id="{{ $q->id }}" title="Kurban atas nama">
+                            <input id="tag_atasnama_{{ $q->id }}" placeholder="Kurban atas nama" type="text" class="form-control tagit" name="whatsapp" value="" style="height: 42px;">
                         </div>
                     </div>
                 </label>
